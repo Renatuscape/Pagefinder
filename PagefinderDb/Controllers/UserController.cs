@@ -11,8 +11,9 @@ namespace PagefinderDb.Controllers
     {
         private readonly PagefinderDbContext _db;
 
-        public UserController(PagefinderDbContext db) {
-        _db = db;
+        public UserController(PagefinderDbContext db)
+        {
+            _db = db;
         }
 
         [HttpGet]
