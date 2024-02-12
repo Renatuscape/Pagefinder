@@ -12,7 +12,7 @@ using PagefinderDb.Data;
 namespace PagefinderDb.Migrations
 {
     [DbContext(typeof(PagefinderDbContext))]
-    [Migration("20240212130402_initial")]
+    [Migration("20240212133113_initial")]
     partial class initial
     {
         /// <inheritdoc />
@@ -53,7 +53,7 @@ namespace PagefinderDb.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Character");
+                    b.ToTable("Characters");
                 });
 
             modelBuilder.Entity("PagefinderDb.Data.Models.Choice", b =>
@@ -86,7 +86,7 @@ namespace PagefinderDb.Migrations
 
                     b.HasIndex("SuccessSpeakerId");
 
-                    b.ToTable("Choice");
+                    b.ToTable("Choices");
                 });
 
             modelBuilder.Entity("PagefinderDb.Data.Models.ChoicePageNavigation", b =>
@@ -110,7 +110,7 @@ namespace PagefinderDb.Migrations
 
                     b.HasIndex("PageId");
 
-                    b.ToTable("ChoicePageNavigation");
+                    b.ToTable("ChoicePageNavigations");
                 });
 
             modelBuilder.Entity("PagefinderDb.Data.Models.Collection", b =>
@@ -162,7 +162,7 @@ namespace PagefinderDb.Migrations
 
                     b.HasIndex("PlayTestId");
 
-                    b.ToTable("InventoryItem");
+                    b.ToTable("InventoryItems");
                 });
 
             modelBuilder.Entity("PagefinderDb.Data.Models.Item", b =>
@@ -193,7 +193,7 @@ namespace PagefinderDb.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Item");
+                    b.ToTable("Items");
                 });
 
             modelBuilder.Entity("PagefinderDb.Data.Models.Page", b =>
@@ -220,7 +220,7 @@ namespace PagefinderDb.Migrations
 
                     b.HasIndex("StoryId");
 
-                    b.ToTable("Page");
+                    b.ToTable("Pages");
                 });
 
             modelBuilder.Entity("PagefinderDb.Data.Models.PlayTest", b =>
@@ -242,7 +242,7 @@ namespace PagefinderDb.Migrations
                     b.HasIndex("StoryId")
                         .IsUnique();
 
-                    b.ToTable("PlayTest");
+                    b.ToTable("PlayTests");
                 });
 
             modelBuilder.Entity("PagefinderDb.Data.Models.Requirement", b =>
@@ -279,7 +279,7 @@ namespace PagefinderDb.Migrations
 
                     b.HasIndex("StoryId");
 
-                    b.ToTable("Requirement");
+                    b.ToTable("Requirements");
                 });
 
             modelBuilder.Entity("PagefinderDb.Data.Models.Restriction", b =>
@@ -316,7 +316,7 @@ namespace PagefinderDb.Migrations
 
                     b.HasIndex("StoryId");
 
-                    b.ToTable("Restriction");
+                    b.ToTable("Restrictions");
                 });
 
             modelBuilder.Entity("PagefinderDb.Data.Models.Reward", b =>
@@ -353,7 +353,7 @@ namespace PagefinderDb.Migrations
 
                     b.HasIndex("StoryId");
 
-                    b.ToTable("Reward");
+                    b.ToTable("Rewards");
                 });
 
             modelBuilder.Entity("PagefinderDb.Data.Models.Story", b =>
@@ -381,7 +381,7 @@ namespace PagefinderDb.Migrations
 
                     b.HasIndex("CollectionId");
 
-                    b.ToTable("Story");
+                    b.ToTable("Stories");
                 });
 
             modelBuilder.Entity("PagefinderDb.Data.Models.User", b =>
@@ -406,7 +406,7 @@ namespace PagefinderDb.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("User");
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("PagefinderDb.Data.Models.Character", b =>

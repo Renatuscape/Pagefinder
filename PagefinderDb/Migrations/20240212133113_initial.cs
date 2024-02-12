@@ -11,7 +11,7 @@ namespace PagefinderDb.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "User",
+                name: "Users",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -22,11 +22,11 @@ namespace PagefinderDb.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_User", x => x.Id);
+                    table.PrimaryKey("PK_Users", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Character",
+                name: "Characters",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -39,11 +39,11 @@ namespace PagefinderDb.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Character", x => x.Id);
+                    table.PrimaryKey("PK_Characters", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Character_User_UserId",
+                        name: "FK_Characters_Users_UserId",
                         column: x => x.UserId,
-                        principalTable: "User",
+                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -63,15 +63,15 @@ namespace PagefinderDb.Migrations
                 {
                     table.PrimaryKey("PK_Collections", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Collections_User_UserId",
+                        name: "FK_Collections_Users_UserId",
                         column: x => x.UserId,
-                        principalTable: "User",
+                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Item",
+                name: "Items",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -84,17 +84,17 @@ namespace PagefinderDb.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Item", x => x.Id);
+                    table.PrimaryKey("PK_Items", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Item_User_UserId",
+                        name: "FK_Items_Users_UserId",
                         column: x => x.UserId,
-                        principalTable: "User",
+                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Choice",
+                name: "Choices",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -107,21 +107,21 @@ namespace PagefinderDb.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Choice", x => x.Id);
+                    table.PrimaryKey("PK_Choices", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Choice_Character_FailureSpeakerId",
+                        name: "FK_Choices_Characters_FailureSpeakerId",
                         column: x => x.FailureSpeakerId,
-                        principalTable: "Character",
+                        principalTable: "Characters",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Choice_Character_SuccessSpeakerId",
+                        name: "FK_Choices_Characters_SuccessSpeakerId",
                         column: x => x.SuccessSpeakerId,
-                        principalTable: "Character",
+                        principalTable: "Characters",
                         principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
-                name: "Story",
+                name: "Stories",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -133,9 +133,9 @@ namespace PagefinderDb.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Story", x => x.Id);
+                    table.PrimaryKey("PK_Stories", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Story_Collections_CollectionId",
+                        name: "FK_Stories_Collections_CollectionId",
                         column: x => x.CollectionId,
                         principalTable: "Collections",
                         principalColumn: "Id",
@@ -143,7 +143,7 @@ namespace PagefinderDb.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Page",
+                name: "Pages",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -155,17 +155,17 @@ namespace PagefinderDb.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Page", x => x.Id);
+                    table.PrimaryKey("PK_Pages", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Page_Story_StoryId",
+                        name: "FK_Pages_Stories_StoryId",
                         column: x => x.StoryId,
-                        principalTable: "Story",
+                        principalTable: "Stories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "PlayTest",
+                name: "PlayTests",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -175,17 +175,17 @@ namespace PagefinderDb.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PlayTest", x => x.Id);
+                    table.PrimaryKey("PK_PlayTests", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_PlayTest_Story_StoryId",
+                        name: "FK_PlayTests_Stories_StoryId",
                         column: x => x.StoryId,
-                        principalTable: "Story",
+                        principalTable: "Stories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Requirement",
+                name: "Requirements",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -199,29 +199,29 @@ namespace PagefinderDb.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Requirement", x => x.Id);
+                    table.PrimaryKey("PK_Requirements", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Requirement_Choice_ChoiceId",
+                        name: "FK_Requirements_Choices_ChoiceId",
                         column: x => x.ChoiceId,
-                        principalTable: "Choice",
+                        principalTable: "Choices",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Requirement_Item_ItemId",
+                        name: "FK_Requirements_Items_ItemId",
                         column: x => x.ItemId,
-                        principalTable: "Item",
+                        principalTable: "Items",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Requirement_Story_StoryId",
+                        name: "FK_Requirements_Stories_StoryId",
                         column: x => x.StoryId,
-                        principalTable: "Story",
+                        principalTable: "Stories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Restriction",
+                name: "Restrictions",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -235,29 +235,29 @@ namespace PagefinderDb.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Restriction", x => x.Id);
+                    table.PrimaryKey("PK_Restrictions", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Restriction_Choice_ChoiceId",
+                        name: "FK_Restrictions_Choices_ChoiceId",
                         column: x => x.ChoiceId,
-                        principalTable: "Choice",
+                        principalTable: "Choices",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Restriction_Item_ItemId",
+                        name: "FK_Restrictions_Items_ItemId",
                         column: x => x.ItemId,
-                        principalTable: "Item",
+                        principalTable: "Items",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Restriction_Story_StoryId",
+                        name: "FK_Restrictions_Stories_StoryId",
                         column: x => x.StoryId,
-                        principalTable: "Story",
+                        principalTable: "Stories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Reward",
+                name: "Rewards",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -271,29 +271,29 @@ namespace PagefinderDb.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Reward", x => x.Id);
+                    table.PrimaryKey("PK_Rewards", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Reward_Choice_ChoiceId",
+                        name: "FK_Rewards_Choices_ChoiceId",
                         column: x => x.ChoiceId,
-                        principalTable: "Choice",
+                        principalTable: "Choices",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Reward_Item_ItemId",
+                        name: "FK_Rewards_Items_ItemId",
                         column: x => x.ItemId,
-                        principalTable: "Item",
+                        principalTable: "Items",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Reward_Story_StoryId",
+                        name: "FK_Rewards_Stories_StoryId",
                         column: x => x.StoryId,
-                        principalTable: "Story",
+                        principalTable: "Stories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "ChoicePageNavigation",
+                name: "ChoicePageNavigations",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -303,23 +303,23 @@ namespace PagefinderDb.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ChoicePageNavigation", x => x.Id);
+                    table.PrimaryKey("PK_ChoicePageNavigations", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ChoicePageNavigation_Choice_ChoiceId",
+                        name: "FK_ChoicePageNavigations_Choices_ChoiceId",
                         column: x => x.ChoiceId,
-                        principalTable: "Choice",
+                        principalTable: "Choices",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ChoicePageNavigation_Page_PageId",
+                        name: "FK_ChoicePageNavigations_Pages_PageId",
                         column: x => x.PageId,
-                        principalTable: "Page",
+                        principalTable: "Pages",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "InventoryItem",
+                name: "InventoryItems",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -330,40 +330,40 @@ namespace PagefinderDb.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_InventoryItem", x => x.Id);
+                    table.PrimaryKey("PK_InventoryItems", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_InventoryItem_PlayTest_PlayTestId",
+                        name: "FK_InventoryItems_PlayTests_PlayTestId",
                         column: x => x.PlayTestId,
-                        principalTable: "PlayTest",
+                        principalTable: "PlayTests",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Character_UserId",
-                table: "Character",
+                name: "IX_Characters_UserId",
+                table: "Characters",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Choice_FailureSpeakerId",
-                table: "Choice",
-                column: "FailureSpeakerId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Choice_SuccessSpeakerId",
-                table: "Choice",
-                column: "SuccessSpeakerId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ChoicePageNavigation_ChoiceId",
-                table: "ChoicePageNavigation",
+                name: "IX_ChoicePageNavigations_ChoiceId",
+                table: "ChoicePageNavigations",
                 column: "ChoiceId",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_ChoicePageNavigation_PageId",
-                table: "ChoicePageNavigation",
+                name: "IX_ChoicePageNavigations_PageId",
+                table: "ChoicePageNavigations",
                 column: "PageId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Choices_FailureSpeakerId",
+                table: "Choices",
+                column: "FailureSpeakerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Choices_SuccessSpeakerId",
+                table: "Choices",
+                column: "SuccessSpeakerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Collections_UserId",
@@ -371,74 +371,74 @@ namespace PagefinderDb.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_InventoryItem_PlayTestId",
-                table: "InventoryItem",
+                name: "IX_InventoryItems_PlayTestId",
+                table: "InventoryItems",
                 column: "PlayTestId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Item_UserId",
-                table: "Item",
+                name: "IX_Items_UserId",
+                table: "Items",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Page_StoryId",
-                table: "Page",
+                name: "IX_Pages_StoryId",
+                table: "Pages",
                 column: "StoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PlayTest_StoryId",
-                table: "PlayTest",
+                name: "IX_PlayTests_StoryId",
+                table: "PlayTests",
                 column: "StoryId",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Requirement_ChoiceId",
-                table: "Requirement",
+                name: "IX_Requirements_ChoiceId",
+                table: "Requirements",
                 column: "ChoiceId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Requirement_ItemId",
-                table: "Requirement",
+                name: "IX_Requirements_ItemId",
+                table: "Requirements",
                 column: "ItemId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Requirement_StoryId",
-                table: "Requirement",
+                name: "IX_Requirements_StoryId",
+                table: "Requirements",
                 column: "StoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Restriction_ChoiceId",
-                table: "Restriction",
+                name: "IX_Restrictions_ChoiceId",
+                table: "Restrictions",
                 column: "ChoiceId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Restriction_ItemId",
-                table: "Restriction",
+                name: "IX_Restrictions_ItemId",
+                table: "Restrictions",
                 column: "ItemId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Restriction_StoryId",
-                table: "Restriction",
+                name: "IX_Restrictions_StoryId",
+                table: "Restrictions",
                 column: "StoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Reward_ChoiceId",
-                table: "Reward",
+                name: "IX_Rewards_ChoiceId",
+                table: "Rewards",
                 column: "ChoiceId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Reward_ItemId",
-                table: "Reward",
+                name: "IX_Rewards_ItemId",
+                table: "Rewards",
                 column: "ItemId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Reward_StoryId",
-                table: "Reward",
+                name: "IX_Rewards_StoryId",
+                table: "Rewards",
                 column: "StoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Story_CollectionId",
-                table: "Story",
+                name: "IX_Stories_CollectionId",
+                table: "Stories",
                 column: "CollectionId");
         }
 
@@ -446,43 +446,43 @@ namespace PagefinderDb.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "ChoicePageNavigation");
+                name: "ChoicePageNavigations");
 
             migrationBuilder.DropTable(
-                name: "InventoryItem");
+                name: "InventoryItems");
 
             migrationBuilder.DropTable(
-                name: "Requirement");
+                name: "Requirements");
 
             migrationBuilder.DropTable(
-                name: "Restriction");
+                name: "Restrictions");
 
             migrationBuilder.DropTable(
-                name: "Reward");
+                name: "Rewards");
 
             migrationBuilder.DropTable(
-                name: "Page");
+                name: "Pages");
 
             migrationBuilder.DropTable(
-                name: "PlayTest");
+                name: "PlayTests");
 
             migrationBuilder.DropTable(
-                name: "Choice");
+                name: "Choices");
 
             migrationBuilder.DropTable(
-                name: "Item");
+                name: "Items");
 
             migrationBuilder.DropTable(
-                name: "Story");
+                name: "Stories");
 
             migrationBuilder.DropTable(
-                name: "Character");
+                name: "Characters");
 
             migrationBuilder.DropTable(
                 name: "Collections");
 
             migrationBuilder.DropTable(
-                name: "User");
+                name: "Users");
         }
     }
 }
