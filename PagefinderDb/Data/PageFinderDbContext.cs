@@ -24,6 +24,18 @@ namespace PagefinderDb.Data
                 .HasForeignKey<PlayTest>(pt => pt.StoryId)
                 .OnDelete(DeleteBehavior.Restrict); // Prevent cascade delete
 
+            modelBuilder.Entity<Choice>()
+                .HasOne(c => c.SuccessPage)
+                .WithMany() // Assuming there's no navigation property from Story to Requirement
+                .HasForeignKey(c => c.SuccessPageId) // Specify the foreign key for SuccessPage
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Choice>()
+                .HasOne(c => c.FailurePage)
+                .WithMany() // Assuming there's no navigation property from Story to Requirement
+                .HasForeignKey(c => c.FailurePageId) // Specify the foreign key for FailurePage
+                .OnDelete(DeleteBehavior.Restrict);
+
             modelBuilder.Entity<Requirement>()
                 .HasOne(r => r.Story)
                 .WithMany() // Assuming there's no navigation property from Story to Requirement
@@ -47,7 +59,6 @@ namespace PagefinderDb.Data
 
         public DbSet<Character> Characters { get; set; } = default!;
         public DbSet<Choice> Choices { get; set; } = default!;
-        public DbSet<ChoicePageNavigation> ChoicePageNavigations { get; set; } = default!;
         public DbSet<Collection> Collections { get; set; } = default!;
         public DbSet<InventoryItem> InventoryItems { get; set; } = default!;
         public DbSet<Item> Items { get; set; } = default!;

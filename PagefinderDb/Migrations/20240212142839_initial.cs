@@ -94,33 +94,6 @@ namespace PagefinderDb.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Choices",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    SuccessSpeakerId = table.Column<int>(type: "int", nullable: true),
-                    SuccessText = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    FailureSpeakerId = table.Column<int>(type: "int", nullable: true),
-                    FailureText = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Choices", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Choices_Characters_FailureSpeakerId",
-                        column: x => x.FailureSpeakerId,
-                        principalTable: "Characters",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Choices_Characters_SuccessSpeakerId",
-                        column: x => x.SuccessSpeakerId,
-                        principalTable: "Characters",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Stories",
                 columns: table => new
                 {
@@ -151,7 +124,8 @@ namespace PagefinderDb.Migrations
                     StoryId = table.Column<int>(type: "int", nullable: false),
                     PageTitle = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PageText = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ImageURL = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    ImageURL = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsEnd = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -182,6 +156,60 @@ namespace PagefinderDb.Migrations
                         principalTable: "Stories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Choices",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SuccessPageId = table.Column<int>(type: "int", nullable: false),
+                    FailurePageId = table.Column<int>(type: "int", nullable: false),
+                    PageId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Choices", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Choices_Pages_FailurePageId",
+                        column: x => x.FailurePageId,
+                        principalTable: "Pages",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Choices_Pages_PageId",
+                        column: x => x.PageId,
+                        principalTable: "Pages",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Choices_Pages_SuccessPageId",
+                        column: x => x.SuccessPageId,
+                        principalTable: "Pages",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "InventoryItems",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ItemId = table.Column<int>(type: "int", nullable: false),
+                    Amount = table.Column<int>(type: "int", nullable: false),
+                    PlayTestId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_InventoryItems", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_InventoryItems_PlayTests_PlayTestId",
+                        column: x => x.PlayTestId,
+                        principalTable: "PlayTests",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -292,78 +320,25 @@ namespace PagefinderDb.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "ChoicePageNavigations",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ChoiceId = table.Column<int>(type: "int", nullable: false),
-                    PageId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ChoicePageNavigations", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_ChoicePageNavigations_Choices_ChoiceId",
-                        column: x => x.ChoiceId,
-                        principalTable: "Choices",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ChoicePageNavigations_Pages_PageId",
-                        column: x => x.PageId,
-                        principalTable: "Pages",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "InventoryItems",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ItemId = table.Column<int>(type: "int", nullable: false),
-                    Amount = table.Column<int>(type: "int", nullable: false),
-                    PlayTestId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_InventoryItems", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_InventoryItems_PlayTests_PlayTestId",
-                        column: x => x.PlayTestId,
-                        principalTable: "PlayTests",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
             migrationBuilder.CreateIndex(
                 name: "IX_Characters_UserId",
                 table: "Characters",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ChoicePageNavigations_ChoiceId",
-                table: "ChoicePageNavigations",
-                column: "ChoiceId",
-                unique: true);
+                name: "IX_Choices_FailurePageId",
+                table: "Choices",
+                column: "FailurePageId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ChoicePageNavigations_PageId",
-                table: "ChoicePageNavigations",
+                name: "IX_Choices_PageId",
+                table: "Choices",
                 column: "PageId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Choices_FailureSpeakerId",
+                name: "IX_Choices_SuccessPageId",
                 table: "Choices",
-                column: "FailureSpeakerId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Choices_SuccessSpeakerId",
-                table: "Choices",
-                column: "SuccessSpeakerId");
+                column: "SuccessPageId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Collections_UserId",
@@ -446,7 +421,7 @@ namespace PagefinderDb.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "ChoicePageNavigations");
+                name: "Characters");
 
             migrationBuilder.DropTable(
                 name: "InventoryItems");
@@ -461,9 +436,6 @@ namespace PagefinderDb.Migrations
                 name: "Rewards");
 
             migrationBuilder.DropTable(
-                name: "Pages");
-
-            migrationBuilder.DropTable(
                 name: "PlayTests");
 
             migrationBuilder.DropTable(
@@ -473,10 +445,10 @@ namespace PagefinderDb.Migrations
                 name: "Items");
 
             migrationBuilder.DropTable(
-                name: "Stories");
+                name: "Pages");
 
             migrationBuilder.DropTable(
-                name: "Characters");
+                name: "Stories");
 
             migrationBuilder.DropTable(
                 name: "Collections");

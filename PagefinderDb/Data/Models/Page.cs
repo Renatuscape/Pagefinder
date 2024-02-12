@@ -7,7 +7,8 @@
         public string? PageTitle { get; set; }
         public string? PageText { get; set; }
         public string? ImageURL { get; set; }
+        public bool IsEnd { get; set; }
         public Story? Story { get; set; }
-        public ICollection<ChoicePageNavigation>? ChoicePageNavigations { get; set; }
+        public ICollection<Choice>? Choices { get; set; }
     }
 }

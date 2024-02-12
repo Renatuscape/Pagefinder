@@ -65,49 +65,24 @@ namespace PagefinderDb.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("FailureSpeakerId")
+                    b.Property<int>("FailurePageId")
                         .HasColumnType("int");
 
-                    b.Property<string>("FailureText")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("SuccessSpeakerId")
+                    b.Property<int?>("PageId")
                         .HasColumnType("int");
 
-                    b.Property<string>("SuccessText")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("FailureSpeakerId");
-
-                    b.HasIndex("SuccessSpeakerId");
-
-                    b.ToTable("Choices");
-                });
-
-            modelBuilder.Entity("PagefinderDb.Data.Models.ChoicePageNavigation", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("ChoiceId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PageId")
+                    b.Property<int>("SuccessPageId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ChoiceId")
-                        .IsUnique();
+                    b.HasIndex("FailurePageId");
 
                     b.HasIndex("PageId");
 
-                    b.ToTable("ChoicePageNavigations");
+                    b.HasIndex("SuccessPageId");
+
+                    b.ToTable("Choices");
                 });
 
             modelBuilder.Entity("PagefinderDb.Data.Models.Collection", b =>
@@ -203,6 +178,9 @@ namespace PagefinderDb.Migrations
 
                     b.Property<string>("ImageURL")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsEnd")
+                        .HasColumnType("bit");
 
                     b.Property<string>("PageText")
                         .HasColumnType("nvarchar(max)");
@@ -419,36 +397,25 @@ namespace PagefinderDb.Migrations
 
             modelBuilder.Entity("PagefinderDb.Data.Models.Choice", b =>
                 {
-                    b.HasOne("PagefinderDb.Data.Models.Character", "FailureSpeaker")
+                    b.HasOne("PagefinderDb.Data.Models.Page", "FailurePage")
                         .WithMany()
-                        .HasForeignKey("FailureSpeakerId");
-
-                    b.HasOne("PagefinderDb.Data.Models.Character", "SuccessSpeaker")
-                        .WithMany()
-                        .HasForeignKey("SuccessSpeakerId");
-
-                    b.Navigation("FailureSpeaker");
-
-                    b.Navigation("SuccessSpeaker");
-                });
-
-            modelBuilder.Entity("PagefinderDb.Data.Models.ChoicePageNavigation", b =>
-                {
-                    b.HasOne("PagefinderDb.Data.Models.Choice", "Choice")
-                        .WithOne("ChoicePageNavigation")
-                        .HasForeignKey("PagefinderDb.Data.Models.ChoicePageNavigation", "ChoiceId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasForeignKey("FailurePageId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("PagefinderDb.Data.Models.Page", "Page")
-                        .WithMany("ChoicePageNavigations")
-                        .HasForeignKey("PageId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                    b.HasOne("PagefinderDb.Data.Models.Page", null)
+                        .WithMany("Choices")
+                        .HasForeignKey("PageId");
+
+                    b.HasOne("PagefinderDb.Data.Models.Page", "SuccessPage")
+                        .WithMany()
+                        .HasForeignKey("SuccessPageId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("Choice");
+                    b.Navigation("FailurePage");
 
-                    b.Navigation("Page");
+                    b.Navigation("SuccessPage");
                 });
 
             modelBuilder.Entity("PagefinderDb.Data.Models.Collection", b =>
@@ -594,8 +561,6 @@ namespace PagefinderDb.Migrations
 
             modelBuilder.Entity("PagefinderDb.Data.Models.Choice", b =>
                 {
-                    b.Navigation("ChoicePageNavigation");
-
                     b.Navigation("Requirements");
 
                     b.Navigation("Restrictions");
@@ -610,7 +575,7 @@ namespace PagefinderDb.Migrations
 
             modelBuilder.Entity("PagefinderDb.Data.Models.Page", b =>
                 {
-                    b.Navigation("ChoicePageNavigations");
+                    b.Navigation("Choices");
                 });
 
             modelBuilder.Entity("PagefinderDb.Data.Models.PlayTest", b =>
