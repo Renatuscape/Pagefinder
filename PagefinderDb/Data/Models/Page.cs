@@ -4,6 +4,7 @@
     {
         public int Id { get; set; }
         public int StoryId { get; set; }
+        public int Order { get; set; }
         public string? PageTitle { get; set; }
         public string? PageText { get; set; }
         public string? ImageURL { get; set; }

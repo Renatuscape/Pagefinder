@@ -82,5 +82,17 @@ namespace PagefinderDb.Controllers
             await _db.SaveChangesAsync();
             return NoContent();
         }
+
+        [HttpGet("{userId}/collections")]
+        public async Task<IActionResult> GetUserCollections(int userId)
+        {
+            var collections = await _db.Collections
+                .Where(c => c.UserId == userId)
+                .Include(c => c.User)
+                .Include(c => c.Stories)!
+                .ThenInclude(s => s.Pages)
+                .ToListAsync();
+            return Ok(collections);
+        }
     }
 }
