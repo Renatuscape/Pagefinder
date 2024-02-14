@@ -30,10 +30,23 @@ namespace PagefinderDb.Controllers
         {
             var user = await _db.Users
                 .Include( u => u.Collections)!
-                .ThenInclude( c => c.Stories)!
-                .Include( u => u.Characters)
-                .Include( u => u.Items)
                 .FirstOrDefaultAsync( u => u.Id == id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            return Ok(user);
+        }
+
+        [HttpGet("{id}/library")]
+        public async Task<IActionResult> GetUserLibrary(int id)
+        {
+            var user = await _db.Users
+                .Include(u => u.Collections)!
+                .ThenInclude(c => c.Stories)!
+                .Include(u => u.Characters)
+                .Include(u => u.Items)
+                .FirstOrDefaultAsync(u => u.Id == id);
             if (user == null)
             {
                 return NotFound();
@@ -88,9 +101,9 @@ namespace PagefinderDb.Controllers
         {
             var collections = await _db.Collections
                 .Where(c => c.UserId == userId)
-                .Include(c => c.User)
+                //.Include(c => c.User)
                 .Include(c => c.Stories)!
-                .ThenInclude(s => s.Pages)
+                //.ThenInclude(s => s.Pages)
                 .ToListAsync();
             return Ok(collections);
         }
