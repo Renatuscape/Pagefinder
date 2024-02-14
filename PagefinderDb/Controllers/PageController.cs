@@ -56,7 +56,7 @@ namespace PagefinderDb.Controllers
         {
             await _db.Pages.AddAsync(page);
             await _db.SaveChangesAsync();
-            return CreatedAtAction(nameof(GetPage), new { id = page.Id }, page);
+            return CreatedAtAction(nameof(GetPage), new { id = page.Id}, page);
         }
 
         [HttpPut("{id}")]
