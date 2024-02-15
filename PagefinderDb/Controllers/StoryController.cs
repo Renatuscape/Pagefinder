@@ -41,14 +41,7 @@ namespace PagefinderDb.Controllers
                 .Include(s => s.Collection)!
                 .ThenInclude(c => c!.User)!
                 .Include(s => s.Pages)!
-                     .ThenInclude(p => p.Choices)!
-                            .ThenInclude(choice => choice!.Rewards)! // Include content for Choice
-                .Include(s => s.Pages)!
-                    .ThenInclude(p => p.Choices)!
-                            .ThenInclude(choice => choice!.Restrictions)! // Include Restrictions for Choice
-                .Include(s => s.Pages)!
-                    .ThenInclude(p => p.Choices)!
-                            .ThenInclude(choice => choice!.Requirements) // Include Requirements for Choice
+                     .ThenInclude(p => p.Choices)
 
                 .FirstOrDefaultAsync(s => s.Id == id);
 

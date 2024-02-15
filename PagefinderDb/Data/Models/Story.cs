@@ -10,6 +10,5 @@
         public int CollectionId { get; set; }
         public Collection? Collection { get; set; }
         public ICollection<Page>? Pages { get; set; }
-        public PlayTest? PlayTest { get; set; }
     }
 }

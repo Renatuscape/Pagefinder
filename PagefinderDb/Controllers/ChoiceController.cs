@@ -21,9 +21,6 @@ namespace PagefinderDb.Controllers
         public async Task<IActionResult> GetChoice(int id)
         {
             var choice = await _db.Choices
-                .Include(c => c.Rewards)
-                .Include(c => c.Restrictions)
-                .Include(c => c.Requirements)
                 .FirstOrDefaultAsync(c => c.Id == id);
             if (choice == null)
             {

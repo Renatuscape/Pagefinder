@@ -7,7 +7,5 @@
         public string Email { get; set; } = string.Empty;
         public string Password { get; set; } = string.Empty;
         public ICollection<Collection>? Collections { get; set; }
-        public ICollection<Character>? Characters { get; set; }
-        public ICollection<Item>? Items { get; set; }
     }
 }

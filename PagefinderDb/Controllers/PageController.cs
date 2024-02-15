@@ -22,12 +22,7 @@ namespace PagefinderDb.Controllers
         {
             var pages = await _db.Pages
                 .Where(p => p.StoryId == storyId)
-                .Include(p => p.Choices)!
-                    .ThenInclude(choice => choice!.Rewards)! // Include content for Choice
-                .Include(p => p.Choices)!
-                    .ThenInclude(choice => choice!.Restrictions)! // Include Restrictions for Choice
-                .Include(p => p.Choices)!
-                    .ThenInclude(choice => choice!.Requirements) // Include Requirements for Choice
+                .Include(p => p.Choices)
                 .ToListAsync();
             return Ok(pages);
         }
@@ -37,12 +32,7 @@ namespace PagefinderDb.Controllers
         {
             var page = await _db.Pages
                 .Where(p => p.StoryId == storyId)
-                .Include(p => p.Choices)!
-                    .ThenInclude(choice => choice!.Rewards)! // Include content for Choice
-                .Include(p => p.Choices)!
-                    .ThenInclude(choice => choice!.Restrictions)! // Include Restrictions for Choice
-                .Include(p => p.Choices)!
-                    .ThenInclude(choice => choice!.Requirements) // Include Requirements for Choice
+                .Include(p => p.Choices)
                 .FirstOrDefaultAsync(p => p.Id == id);
             if (page == null)
             {

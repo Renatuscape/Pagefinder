@@ -43,9 +43,7 @@ namespace PagefinderDb.Controllers
         {
             var user = await _db.Users
                 .Include(u => u.Collections)!
-                .ThenInclude(c => c.Stories)!
-                .Include(u => u.Characters)
-                .Include(u => u.Items)
+                .ThenInclude(c => c.Stories)
                 .FirstOrDefaultAsync(u => u.Id == id);
             if (user == null)
             {
