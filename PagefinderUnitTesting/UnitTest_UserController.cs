@@ -5,6 +5,7 @@ using System.Net.Http.Json;
 using System.Net;
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
+using System.Text.Json;
 
 namespace PagefinderUnitTesting
 {
@@ -55,11 +56,29 @@ namespace PagefinderUnitTesting
         }
 
         [Fact]
-        public async Task DeleteUser_ReturnsNoContent()
+        public async Task CreateAndDeleteUser_ReturnsNoContent()
         {
             var client = _factory.CreateClient();
 
-            var userId = 1;
+            var user = new User
+            {
+                Username = "TestDeleteUser",
+                Email = "email@test.com",
+                Password = "test123",
+            };
+            var createResponse = await client.PostAsJsonAsync("/user", user);
+
+            createResponse.EnsureSuccessStatusCode();
+
+            var jsonString = await createResponse.Content.ReadAsStringAsync();
+            var newUser = JsonSerializer.Deserialize<User>(jsonString, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+            if (newUser == null)
+            {
+                throw new Exception("User not created");
+            }
+
+            var userId = newUser.Id;
 
             //Act
             var deleteResponse = await client.DeleteAsync($"/user/{userId}");
