@@ -44,9 +44,31 @@ namespace PagefinderDb.Controllers
         [HttpPost]
         public async Task<IActionResult> CreatePage(Page page)
         {
+            var story = await _db.Stories.Where(s => s.Id == page.StoryId)
+                .FirstOrDefaultAsync();
+
+            if (story == null)
+            {
+                return BadRequest();
+            }
+
+            await _db.Entry(story).Collection(s => s.Pages!).LoadAsync(); // Ensure Pages collection is loaded
+
+            if (story.Pages != null)
+            {
+                page.Order = story.Pages.Count;
+            }
+            else
+            {
+                page.Order = 0;
+            }
+
+            page.Story = story;
+
             await _db.Pages.AddAsync(page);
             await _db.SaveChangesAsync();
-            return CreatedAtAction(nameof(GetPage), new { id = page.Id}, page);
+
+            return CreatedAtAction(nameof(GetPage), new { storyId = page.StoryId, id = page.Id }, page);
         }
 
         [HttpPut("{id}")]
@@ -83,6 +105,19 @@ namespace PagefinderDb.Controllers
             if (page == null)
             {
                 return NotFound();
+            }
+
+            var pagesInStory = await _db.Pages
+                .Where(p => p.StoryId == page.StoryId)
+                .ToListAsync();
+
+            foreach (var p in pagesInStory)
+            {
+                if (p.Order > page.Order)
+                {
+                    p.Order--;
+                    _db.Entry(p).State = EntityState.Modified;
+                }
             }
 
             _db.Pages.Remove(page);
