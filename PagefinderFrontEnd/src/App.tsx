@@ -1,15 +1,35 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
 import { UserCard } from './components/UserCard'
 import { LibraryCard } from './components/LibraryCard'
 import { EditorCard } from './components/EditorCard'
 import { ReaderCard } from './components/ReaderCard'
 
+async function fetchUserAsync(id: number | undefined): Promise<User> {
+  const response = await fetch(`https://localhost:7177/User/${id}`);
+
+  try {
+      const resObject = await response.json();
+
+      console.log(resObject);
+
+      return resObject;
+  }
+  catch (error) {
+      console.log(error);
+      return { id: -1, username: 'BadResponse', email: '', password: '' };
+  }
+}
+
 function App() {
   // const [user, setUser] = useState<User | null>(null)
-  const [user, setUser] = useState<User | null>({ id: 4, username: 'TestUsername', email: '', password: '' })
+  const [user, setUser] = useState<User | null>({ id: 4, username: 'Default', email: '', password: '' })
   const [readStory, setReadStory] = useState<Story | null>(null);
   
+  useEffect(() => {
+    fetchUserAsync(4).then(user => setUser(user));
+}, [])
+
   return (
     <>
       <h1>Pagefinder</h1>
