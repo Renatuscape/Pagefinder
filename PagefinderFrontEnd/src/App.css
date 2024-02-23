@@ -6,10 +6,104 @@
   text-align: center;
 }
 
+body {
+  margin: 0;
+  display: flex;
+  min-width: 675px;
+  min-height: 100vh;
+  background-color:#66a2ad;
+  background-image: url('/public/images/scribbletext_repeating_opaque.png');
+  background-size: 40%;
+  border-radius: 0;
+}
+
+h2 {
+  color: #35656f;
+}
+
+.card-container {
+  text-align: left;
+  display: grid;
+  /* grid-template-columns: 1fr 2fr;
+grid-template-rows: 2fr 2fr auto; */
+  grid-template-areas:
+    "banner banner banner"
+    "user editor editor"
+    "portfolio editor editor"
+    "reader reader reader";
+  grid-template-columns: 1fr 2fr;
+  flex-grow: 3;
+  background-color: #d5c3af;
+  padding: 2em;
+  margin: 1em;
+  margin-right: 5em;
+  margin-left: 5em;
+  gap: 15px;
+}
+
+.card {
+  flex-grow: 3;
+  padding: 1em;
+  background-color: white;
+  box-shadow: 2px 2px 1px #358795b9;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.button-container{
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  margin-top: 15px;
+}
+
+.library-cards{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.collection-thumbnail{
+  min-height: 200px;
+  width: 500px;
+  overflow: hidden;
+  background-color: #d5c3af;
+  box-shadow: 3px 3px 3px #2c5e6791;
+}
+
+.collection-thumbnail-inner {
+  margin: 10px;
+}
+
+.story-row {
+  background-color: #ffffff43;
+  border-radius: 0;
+  margin-top: 10px;
+  margin-left: -10px;
+  margin-right: -10px;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  align-items: center;
+  color: #35656f;
+}
+
+.story-row span{
+  font-size: 125%;
+}
+
+.read-the-docs {
+  color: #35656f;
+}
+
 @keyframes logo-spin {
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
@@ -21,31 +115,26 @@
   }
 }
 
-.card-container{
-display: grid;
-/* grid-template-columns: 1fr 2fr;
-grid-template-rows: 2fr 2fr auto; */
-
-grid-template-areas:
-"user user user"
-"portfolio collectionManager collectionManager"
-"portfolio storyManager storyManager"
-"reader reader reader";
-grid-template-columns: 1fr 2fr;
-flex-grow: 3;
-background-color: rgb(219, 204, 190);
-padding: 1em;
-margin: 1em;
-gap: 15px;
-}
-
-.card {
-  flex-grow: 3;
-  padding: 1em;
-  background-color: white;
-  box-shadow: 2px 2px 1px rgba(115, 110, 173, 0.651);
-}
-
-.read-the-docs {
-  color: #888;
+@media (max-width: 1250px) {
+  .card-container {
+    text-align: left;
+    display: grid;
+    /* grid-template-columns: 1fr 2fr;
+  grid-template-rows: 2fr 2fr auto; */
+    grid-template-areas:
+      "banner"
+      "user"
+      "portfolio"
+      "editor"
+      "reader";
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    flex-grow: 3;
+    background-color: #d5c3af;
+    padding: 2em;
+    margin: 1em;
+    margin-right: 1em;
+    margin-left: 1em;
+    gap: 15px;
+  }
 }
