@@ -18,7 +18,7 @@ export function UserCard(props: UserCardProps) {
           </div>
         </>
         :
-        <form style={{ marginTop: 15, display: 'flex', flexDirection: 'column', gap: 10 }}>
+        <form style={{ marginTop: 15 }}>
           <input placeholder='username' type='text' />
           <input placeholder='password' type='password' />
           <button>Submit</button>
