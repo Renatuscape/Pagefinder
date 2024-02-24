@@ -19,6 +19,7 @@ body {
 
 h2 {
   color: #35656f;
+  margin-bottom: 10px;
 }
 
 .card-container {
@@ -58,13 +59,27 @@ grid-template-rows: 2fr 2fr auto; */
   margin-top: 15px;
 }
 
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+form input {
+  font-size: 120%;
+  padding: 10px;
+}
+
+form select {
+  font-size: 120%;
+  padding: 10px;
+}
+
 .library-cards{
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 25px;
-  margin: 10px;
-  margin-top: 20px;
 }
 
 .collection-thumbnail{
@@ -147,5 +162,12 @@ grid-template-rows: 2fr 2fr auto; */
     margin-right: 1em;
     margin-left: 1em;
     gap: 15px;
+  }
+}
+
+@media (min-width: 2200px){
+  .card-container {
+    margin-right: 15em;
+    margin-left: 15em;
   }
 }
