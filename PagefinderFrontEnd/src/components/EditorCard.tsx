@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { CreateStory } from "./CreateStory";
+import { CreateCollection } from "./CreateCollection";
 
 type EditorCardProps = {
     user: User | null;
@@ -9,26 +10,65 @@ type EditorCardProps = {
 
 export function EditorCard(props: EditorCardProps) {
     const [createStory, setCreateStory] = useState<Boolean>(false);
-    const [createPage, setCreatePage] = useState<Boolean>(false);
+    const [createCollection, setCreateCollection] = useState<Boolean>(false);
+    const [editStory, setEditStory] = useState<Boolean>(false);
+    const [editCollection, setEditCollection] = useState<Boolean>(false);
 
-    const [story, setStory] = useState<Story | null>(null);
+    const [storyId, setStoryId] = useState<number | null>(null);
+    const [collectionId, setCollectionId] = useState<number | null>(null);
 
-    const clickCreateStory = ()=> {
+    const clickCreateStory = () => {
         setCreateStory(true);
-        setCreatePage(false);
+        setEditStory(false);
+        setCreateCollection(false);
+    }
+
+    const clickCreateCollection = () => {
+        setCreateStory(false);
+        setEditStory(false);
+        setCreateCollection(true);
+        setEditCollection(false);
+    }
+
+    const clickEditStory = (storyId: number) => {
+        setCreateStory(false);
+        setEditStory(true);
+        setCreateCollection(false);
+        setEditCollection(false);
+        setStoryId(storyId);
+    }
+
+    const clickEditCollection = (collectionId: number) => {
+        setCreateStory(false);
+        setEditStory(true);
+        setCreateCollection(false);
+        setEditCollection(true);
+        setCollectionId(collectionId);
     }
 
     const clickCancel = () => {
         setCreateStory(false);
-        setCreatePage(false);
+        setEditStory(false);
+        setCreateCollection(false);
+        setEditCollection(false);
     }
+
     return <>
         <div className="card" style={{ gridArea: 'editor', backgroundColor: '#bfe4e6' }}>
             {props.user ?
                 <>
                     <h2>Editor</h2>
                     {createStory && <>
-                        <CreateStory setCreateStory={() => setCreatePage} userID={props.user?.id} />
+                        <CreateStory editStory={clickEditStory} userId={props.user?.id} />
+                    </>}
+                    {editStory && <>
+                        <p>Edit story component here</p>
+                    </>}
+                    {createCollection && <>
+                        <CreateCollection userId={props.user?.id} editCollection={clickEditCollection} />
+                    </>}
+                    {editCollection && <>
+                        <p>Edit collection component here</p>
                     </>}
                 </>
                 :
@@ -36,7 +76,7 @@ export function EditorCard(props: EditorCardProps) {
             }
 
             <div className="button-container">
-                <button onClick={clickCreateStory}>Create Story</button><button>Create Page</button><button onClick={clickCancel}>Cancel</button>
+                <button onClick={clickCreateCollection}>Create Collection</button><button onClick={clickCreateStory}>Create Story</button><button>Edit Story</button><button onClick={clickCancel}>Cancel</button>
             </div>
         </div>
     </>
