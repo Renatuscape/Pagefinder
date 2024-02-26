@@ -29,8 +29,8 @@ async function createStory(
         throw new Error(JSON.stringify(errorData));
     }
 
-    const createdPitch = await res.json();
-    return createdPitch;
+    const createdStory = await res.json();
+    return createdStory;
 }
 
 async function fetchCollectionsAsync(id: number | undefined): Promise<Collection[]> {
@@ -50,8 +50,8 @@ async function fetchCollectionsAsync(id: number | undefined): Promise<Collection
 }
 
 type CreateStoryProps = {
-    userID: number | undefined;
-    setCreateStory: Dispatch<SetStateAction<boolean>>;
+    userId: number | undefined;
+    editStory: (storyId: number)=> void;
     // addStory: (story: Story) => void;
 }
 
@@ -64,7 +64,7 @@ export function CreateStory(props: CreateStoryProps) {
     const [collectionId, setCollectionId] = useState<string>('');
 
     useEffect(() => {
-        fetchCollectionsAsync(props.userID).then(collections => setCollections(collections));
+        fetchCollectionsAsync(props.userId).then(collections => setCollections(collections));
     }, [])
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -79,6 +79,7 @@ export function CreateStory(props: CreateStoryProps) {
             );
             //   props.addStory(createdStory);
             //   navigate(`/pitch/${createdStory.id}`);
+            props.editStory(createdStory.id);
         } catch (error: any) {
             if (error.message) {
                 const errorData = JSON.parse(error.message);
@@ -90,8 +91,6 @@ export function CreateStory(props: CreateStoryProps) {
             }
             console.log('An unexpected error occurred.');
         }
-
-        props.setCreateStory(false);
     };
 
     return <>
