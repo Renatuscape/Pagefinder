@@ -37,18 +37,16 @@ export function LibraryCard(props: PortfolioProps) {
             {props.user != null && <>
                 {isCollapsed && <p>Expand to show all your collections.</p>}
                 {!isCollapsed && <>
+                    <button onClick={() => setIsCollapsed(!isCollapsed)}>{isCollapsed ? 'Expand' : 'Collapse'}</button>
                     <div className="library-cards">
                         {collections.map(collection => (
                             <div key={collection.id}>
                                 <CollectionCard collection={collection} />
                             </div>
                         ))}
-                    </div></>}
-
-                <div className="button-container">
-                    <button onClick={() => setIsCollapsed(!isCollapsed)}>{isCollapsed ? 'Expand' : 'Collapse'}</button>
-                    <button>New Collection</button>
-                </div>
+                    </div>
+                </>}
+                <button onClick={() => setIsCollapsed(!isCollapsed)}>{isCollapsed ? 'Expand' : 'Collapse'}</button>
             </>}
         </div>
     </>
