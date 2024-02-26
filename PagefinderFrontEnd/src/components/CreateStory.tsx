@@ -51,7 +51,8 @@ async function fetchCollectionsAsync(id: number | undefined): Promise<Collection
 
 type CreateStoryProps = {
     userId: number | undefined;
-    editStory: (storyId: number)=> void;
+    editStory: ()=> void;
+    setEditStoryId: Dispatch<SetStateAction<number | null>>;
     // addStory: (story: Story) => void;
 }
 
@@ -79,7 +80,9 @@ export function CreateStory(props: CreateStoryProps) {
             );
             //   props.addStory(createdStory);
             //   navigate(`/pitch/${createdStory.id}`);
-            props.editStory(createdStory.id);
+            props.setEditStoryId(createdStory.id);
+            props.editStory();
+
         } catch (error: any) {
             if (error.message) {
                 const errorData = JSON.parse(error.message);
@@ -109,7 +112,6 @@ export function CreateStory(props: CreateStoryProps) {
                             ))}
                         </>}
                         {collections.length === 0 && <option value={-1}>None</option>}
-
                     </select>
                     <button type="submit">Submit</button>
                 </form>
