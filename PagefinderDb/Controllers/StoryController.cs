@@ -24,17 +24,7 @@ namespace PagefinderDb.Controllers
             return Ok(stories);
         }
 
-        [HttpGet("{collectionId}")]
-        public async Task<IActionResult> GetAllStoriesInCollection(int collectionId)
-        {
-            var stories = await _db.Stories
-                .Where(s => s.CollectionId == collectionId)
-                .Include(s => s.Pages)!
-                .ToListAsync();
-            return Ok(stories);
-        }
-
-        [HttpGet("/read")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetStory(int id)
         {
             var story = await _db.Stories
