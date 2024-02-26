@@ -6,19 +6,26 @@ type PortfolioProps = {
 }
 
 async function fetchCollectionsAsync(id: number | undefined): Promise<Collection[]> {
-    const response = await fetch(`https://localhost:7177/User/${id}/collections/`);
 
-    try {
-        const resObject = await response.json();
+    if (id !== undefined){
+        const response = await fetch(`https://localhost:7177/User/${id}/collections/`);
 
-        console.log(resObject);
+        try {
+            const resObject = await response.json();
 
-        return resObject;
+            console.log(resObject);
+
+            return resObject;
+        }
+        catch (error) {
+            console.log(error);
+            return [];
+        }        
     }
-    catch (error) {
-        console.log(error);
+    else{
         return [];
     }
+
 }
 export function LibraryCard(props: PortfolioProps) {
     const [isCollapsed, setIsCollapsed] = useState<boolean>(false);
@@ -26,7 +33,8 @@ export function LibraryCard(props: PortfolioProps) {
 
     useEffect(() => {
         fetchCollectionsAsync(props.user?.id).then(collections => setCollections(collections));
-    }, [])
+    }, [props.user?.id])   
+
 
     return <>
         <div className="card" style={{ gridArea: 'portfolio' }}>
