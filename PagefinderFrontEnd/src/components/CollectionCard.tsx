@@ -8,7 +8,7 @@ type CollectionCardProps = {
 async function deleteCollectionAsync(id: number): Promise<void> {
 
     const res = await fetch(`https://localhost:7177/collection/${id}`,
-    { method: 'DELETE' });
+        { method: 'DELETE' });
 
     if (!res.ok) {
         console.log(res);
@@ -36,17 +36,17 @@ export function CollectionCard(props: CollectionCardProps) {
                 <h2>{collection.name}</h2>
                 <p>{collection.description}</p>
                 {!isCollapsed && <>
-                {collection.stories && collection.stories?.map(story => (
-                    <div key={story.id}>
-                        <StoryRow story={story}/>
-                    </div>
-                ))}
-                {!collection.stories || collection.stories.length === 0 && 'No stories yet'}                
+                    {collection.stories && collection.stories?.map(story => (
+                        <div key={story.id}>
+                            <StoryRow story={story} />
+                        </div>
+                    ))}
+                    {!collection.stories || collection.stories.length === 0 && 'No stories yet'}
                 </>}
 
                 <div className="button-container">
                     <button onClick={handleDelete}>Delete</button>
-                    <button onClick={()=> setIsCollapsed(!isCollapsed)}>{isCollapsed ? 'Expand' : 'Collapse'}</button>
+                    <button onClick={() => setIsCollapsed(!isCollapsed)}>{isCollapsed ? 'Expand' : 'Collapse'}</button>
                     <button>New Story</button>
                 </div>
             </div>
