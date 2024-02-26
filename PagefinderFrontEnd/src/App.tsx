@@ -23,7 +23,7 @@ async function fetchUserAsync(id: number | undefined): Promise<User> {
 
 function App() {
   // const [user, setUser] = useState<User | null>(null)
-  const [user, setUser] = useState<User | null>({ id: 4, username: 'Default', email: '', password: '' })
+  const [user, setUser] = useState<User | null>({ id: -1, username: 'Default', email: '', password: '' })
   const [readStory, setReadStory] = useState<Story | null>(null);
   
   useEffect(() => {
