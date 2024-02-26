@@ -38,7 +38,8 @@ async function createCollection(
 
 type CreateCollectionProps = {
     userId: number | undefined;
-    editCollection: (collectionId: number)=> void;
+    editCollection: ()=> void;
+    setEditCollectionId: Dispatch<SetStateAction<number | null>>;
 }
 
 export function CreateCollection(props: CreateCollectionProps) {
@@ -58,7 +59,8 @@ export function CreateCollection(props: CreateCollectionProps) {
             //   props.addStory(createdStory);
             //   navigate(`/pitch/${createdStory.id}`);
 
-            props.editCollection(createdStory.id);
+            props.setEditCollectionId(createdStory.id);
+            props.editCollection;
 
         } catch (error: any) {
             if (error.message) {
@@ -71,7 +73,6 @@ export function CreateCollection(props: CreateCollectionProps) {
             }
             console.log('An unexpected error occurred.');
         }
-
     };
 
     return <>
