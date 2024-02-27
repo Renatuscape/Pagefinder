@@ -29,12 +29,11 @@ async function fetchCollectionsAsync(id: number | undefined): Promise<Collection
 }
 export function LibraryCard(props: PortfolioProps) {
     const [isCollapsed, setIsCollapsed] = useState<boolean>(false);
-    const [collections, setCollections] = useState<Collection[]>([]);
+    // const [collections, setCollections] = useState<Collection[]>([]);
 
-    useEffect(() => {
-        fetchCollectionsAsync(props.user?.id).then(collections => setCollections(collections));
-    }, [props.user?.id])   
-
+    // useEffect(() => {
+    //     setCollections(props.user?.collections ?? []);
+    // }, [props.user]);
 
     return <>
         <div className="card" style={{ gridArea: 'portfolio' }}>
@@ -47,7 +46,7 @@ export function LibraryCard(props: PortfolioProps) {
                 {!isCollapsed && <>
                     <button onClick={() => setIsCollapsed(!isCollapsed)}>{isCollapsed ? 'Expand' : 'Collapse'}</button>
                     <div className="library-cards">
-                        {collections.map(collection => (
+                        {props.user.collections?.map(collection => (
                             <div key={collection.id}>
                                 <CollectionCard collection={collection} />
                             </div>
