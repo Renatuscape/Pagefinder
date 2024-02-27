@@ -38,7 +38,7 @@ export function CollectionCard(props: CollectionCardProps) {
                 {!isCollapsed && <>
                     {collection.stories && collection.stories?.map(story => (
                         <div key={story.id}>
-                            <StoryRow story={story} />
+                            <StoryRow allowDelete={false} story={story} />
                         </div>
                     ))}
                     {!collection.stories || collection.stories.length === 0 && 'No stories yet'}
