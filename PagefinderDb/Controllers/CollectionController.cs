@@ -72,13 +72,20 @@ namespace PagefinderDb.Controllers
             _db.Entry(collection).State = EntityState.Modified;
             try
             {
+                // Save changes to the database
                 await _db.SaveChangesAsync();
+
+                // Retrieve the updated object from the database
+                var updatedCollection = await _db.Collections.FindAsync(id);
+
+                // Return the updated object
+                return Ok(updatedCollection);
             }
             catch (DbUpdateConcurrencyException)
             {
-                throw;
+                // Handle concurrency conflicts if necessary
+                return StatusCode(500, "Concurrency conflict occurred.");
             }
-            return NoContent();
         }
 
         [HttpDelete("{id}")]
