@@ -82,7 +82,14 @@ namespace PagefinderDb.Controllers
             _db.Entry(page).State = EntityState.Modified;
             try
             {
+                // Save changes to the database
                 await _db.SaveChangesAsync();
+
+                // Retrieve the updated object from the database
+                var updatedCollection = await _db.Collections.FindAsync(id);
+
+                // Return the updated object
+                return Ok(updatedCollection);
             }
             catch (DbUpdateConcurrencyException)
             {
