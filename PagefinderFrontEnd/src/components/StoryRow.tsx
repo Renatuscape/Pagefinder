@@ -1,5 +1,6 @@
 type StoryRowProps = {
     story: Story;
+    allowDelete: boolean;
 }
 
 async function deleteStoryAsync(id: number): Promise<void> {
@@ -26,7 +27,7 @@ export function StoryRow(props: StoryRowProps) {
 
     return <>
         <div className="story-row">
-            <span>{story.title}</span> <div><button onClick={handleDelete}>Delete</button> <button>Read</button></div>
+            <span>{story.title}</span> <div>{props.allowDelete ? <button onClick={handleDelete}>Delete</button> : <button>Read</button>}</div>
         </div>
     </>
 }
