@@ -2,11 +2,13 @@ import { useState } from "react";
 import { CreateStory } from "./CreateStory";
 import { CreateCollection } from "./CreateCollection";
 import { EditStory } from "./EditStory";
+import { EditCollection } from "./EditCollection";
 
 type EditorCardProps = {
     user: User | null;
     story: Story | null;
     collection: Collection | null;
+    updateCollectionInUser: (updatedCollection: Collection) => void;
 }
 
 export function EditorCard(props: EditorCardProps) {
@@ -42,7 +44,7 @@ export function EditorCard(props: EditorCardProps) {
 
     const clickEditCollection = () => {
         setCreateStory(false);
-        setEditStory(true);
+        setEditStory(false);
         setCreateCollection(false);
         setEditCollection(true);
     }
@@ -63,13 +65,13 @@ export function EditorCard(props: EditorCardProps) {
                         <CreateStory setEditStoryId={setEditStoryId} editStory={clickEditStory} userId={props.user?.id} />
                     </>}
                     {editStory && <>
-                        <EditStory user={props.user} storyId={storyId}/>
+                        <EditStory closeComponent={clickCancel} user={props.user} storyId={storyId}/>
                     </>}
                     {createCollection && <>
                         <CreateCollection userId={props.user?.id} setEditCollectionId={setEditCollectionId} editCollection={clickEditCollection} />
                     </>}
                     {editCollection && <>
-                        <p>Edit collection component here</p>
+                    <EditCollection user={props.user} closeComponent={clickCancel} collectionId={collectionId} updateCollectionInUser={props.updateCollectionInUser}/>
                     </>}
                 </>
                 :
@@ -77,7 +79,7 @@ export function EditorCard(props: EditorCardProps) {
             }
 
             <div className="button-container">
-                <button onClick={clickCreateCollection}>Create Collection</button><button onClick={clickCreateStory}>Create Story</button><button onClick={clickEditStory}>Edit Story</button><button onClick={clickCancel}>Cancel</button>
+                <button onClick={clickCreateCollection}>Create Collection</button><button onClick={clickEditCollection}>Edit Collection</button><button onClick={clickCreateStory}>Create Story</button><button onClick={clickEditStory}>Edit Story</button><button onClick={clickCancel}>Cancel</button>
             </div>
         </div>
     </>
